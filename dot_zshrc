@@ -14,7 +14,6 @@ alias ll="ls -lh"
 alias la="ls -lah"
 
 alias up="cd .."
-alias up2="cd ..; cd .."
 
 alias vim="nvim"
 
