@@ -1,0 +1,1 @@
+echo " $(xbacklight -get | awk '{printf "%.0f",$1}')%"

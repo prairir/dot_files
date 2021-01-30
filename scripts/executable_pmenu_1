@@ -1,0 +1,10 @@
+#!/bin/bash
+MENU="$(rofi -sep "|" -dmenu -i -p 'System' -location 3 -yoffset 27 -xoffset 0 -width 15 -hide-scrollbar -line-padding 4 -padding 20 -lines 6 -font "Fantasque Sans Mono 10" <<< "Lock|Logout|Hibernate|Suspend|Reboot|Shutdown")"
+            case "$MENU" in
+                *Lock) i3lock-fancy ;;
+                *Logout) openbox --exit;;
+                *Hibernate) hibernate ;;
+                *Suspend) sus ;;
+                *Reboot) restart ;;
+                *Shutdown) shutoff 
+            esac
