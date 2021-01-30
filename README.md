@@ -51,3 +51,4 @@ you have to use sudo cause some things require big boi perms
 
 * Add fonts to this
 
+* Add reallllllllly old dot files like tmux, vim, old weird scripts, etc
