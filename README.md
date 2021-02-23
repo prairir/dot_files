@@ -26,6 +26,18 @@ $ chezmoi git add .
 $ chezmoi git commit
 ```
 
+## Editing files
+
+```
+$ chezmoi edit <File Name>
+```
+
+or if you want to list directory(if your editor supports it)
+
+```
+$ chezmoi edit
+```
+
 ## Updating changes to my git repo
 
 ```
