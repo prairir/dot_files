@@ -47,10 +47,11 @@ $ chezmoi git push
 ## Apply changes
 
 ```
-$ sudo chezmoi apply
+$ chezmoi apply
 ```
 
-you have to use sudo cause some things require big boi perms
+~~you have to use sudo cause some things require big boi perms~~
+i fixed the perms issue
 
 
 ## TODO
