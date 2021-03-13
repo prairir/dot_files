@@ -18,8 +18,8 @@ alias up="cd .."
 alias vim="nvim"
 
 alias cls="clear"
-alias steal="yay -S"
-alias update="yay -Syu"
+alias steal="paru -S"
+alias update="paru -Syu"
 
 alias connect="nmcli device wifi connect"
 
@@ -33,6 +33,7 @@ export PATH="$HOME/.emacs.d/bin:$PATH"
 export PATH="$PATH:~/.cargo/bin"
 export PATH="$PATH:$HOME/go/bin"
 export PATH="$PATH:$(go env GOPATH)/bin"
+export PATH="$PATH:~/scripts"
 
 eval "$(rbenv init -)"
 
