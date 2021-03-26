@@ -58,6 +58,8 @@ i fixed the perms issue
 
 * Fix polybar scripts to use modules instead
 
+* Add other smart-tabs language support for used langs
+
 * Figure out variables for configs
 
 * Standardize and list down actual system requirements

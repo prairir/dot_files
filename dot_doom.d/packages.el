@@ -50,3 +50,6 @@
 ;(unpin! t)
 
 (package! evil-tutor)
+
+;; for smarter tabs
+(package! smart-tabs-mode)
