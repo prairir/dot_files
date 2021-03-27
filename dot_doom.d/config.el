@@ -119,6 +119,7 @@
 
 ;; Language-Specific Tweaks
 (setq-default python-indent-offset 4) ;; Python
+(setq-default js2-basic-offset custom-tab-width)
 
 ;; Making electric-indent behave sanely
 (setq-default electric-indent-inhibit t)
