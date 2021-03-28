@@ -30,6 +30,9 @@
 (setq doom-font (font-spec :family "Ubuntu Mono Nerd Font" :size 22)
       doom-variable-pitch-font (font-spec :family "Ubuntu Mono Nerd Font" :size 22))
 
+;; font for emojis
+(set-fontset-font t 'symbol "JoyPixels" nil 'append)
+
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
@@ -137,5 +140,11 @@
 ;; smart tabs
 ;;(smart-tabs-insinuate 'c 'javascript 'python 'elixir 'go)
 (smart-tabs-insinuate 'c 'javascript 'python )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; emojis stuff
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-hook 'after-init-hook #'global-emojify-mode)
 
 ;;; config.el ends here

@@ -53,3 +53,6 @@
 
 ;; for smarter tabs
 (package! smart-tabs-mode)
+
+;; for better emoji support, i swear guys, its necessary
+(package! emojify)
