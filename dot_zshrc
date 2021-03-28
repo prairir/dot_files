@@ -25,6 +25,8 @@ alias connect="nmcli device wifi connect"
 
 alias info="info --vi-keys"
 
+alias spotify="ncspot"
+
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
