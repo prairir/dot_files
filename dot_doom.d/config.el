@@ -127,6 +127,9 @@
 (setq-default js2-basic-offset custom-tab-width)
 (setq-default js-indent-level custom-tab-width)
 
+;; c tab size
+(setq-default c-basic-offset custom-tab-width)
+
 ;; Making electric-indent behave sanely
 (setq-default electric-indent-inhibit t)
 
