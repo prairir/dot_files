@@ -56,3 +56,6 @@
 
 ;; for better emoji support, i swear guys, its necessary
 (package! emojify)
+
+;; graphql support
+(package! graphql-mode)
