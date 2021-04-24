@@ -59,3 +59,6 @@
 
 ;; graphql support
 (package! graphql-mode)
+
+;; hcl support
+(package! hcl-mode)

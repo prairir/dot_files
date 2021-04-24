@@ -127,6 +127,10 @@
 (setq-default js2-basic-offset custom-tab-width)
 (setq-default js-indent-level custom-tab-width)
 
+;; for web indentation
+;;(setq web-mode-markup-indent-offset 4)
+;;(setq web-mode-css-indent-offset 4)
+;;(setq web-mode-code-indent-offset 4)
 ;; c tab size
 (setq-default c-basic-offset custom-tab-width)
 
@@ -149,5 +153,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-hook 'after-init-hook #'global-emojify-mode)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; modeline stuff
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; if the column is smaller then cut some stuff off
+(setq doom-modeline-window-width-limit fill-column)
+
+;; set the file type
+(setq doom-modeline-buffer-file-name-style 'relative-to-project)
 
 ;;; config.el ends here
