@@ -105,6 +105,7 @@
 
 ;; custom tab width
 (setq custom-tab-width 2)
+(setq custom-tab-width-alt 4)
 
 ;; Two callable functions for enabling/disabling tabs in Emacs
 (defun disable-tabs () (setq indent-tabs-mode nil))
@@ -121,7 +122,7 @@
 (add-hook 'emacs-lisp-mode-hook 'disable-tabs)
 
 ;; Language-Specific Tweaks
-(setq-default python-indent-offset 4) ;; Python
+(setq-default python-indent-offset custom-tab-width-alt) ;; Python
 
 ;; js acts weird with indents
 (setq-default js2-basic-offset custom-tab-width)
@@ -131,6 +132,8 @@
 ;;(setq web-mode-markup-indent-offset 4)
 ;;(setq web-mode-css-indent-offset 4)
 ;;(setq web-mode-code-indent-offset 4)
+(setq web-mode-script-padding custom-tab-width)
+
 ;; c tab size
 (setq-default c-basic-offset custom-tab-width)
 
