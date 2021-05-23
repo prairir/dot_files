@@ -27,7 +27,7 @@ alias info="info --vi-keys"
 
 alias spotify="ncspot"
 
-plugins=(git)
+plugins=(git asdf)
 
 source $ZSH/oh-my-zsh.sh
 
