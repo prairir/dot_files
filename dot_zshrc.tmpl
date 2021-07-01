@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH="/home/ryan/.oh-my-zsh"
+export ZSH="{{.chezmoi.homeDir}}/.oh-my-zsh"
 
 ZSH_THEME="birame"
 
@@ -18,8 +18,13 @@ alias up="cd .."
 alias vim="nvim"
 
 alias cls="clear"
+{{ if (eq .chezmoi.osRelease.idLike "arch")}}
 alias steal="paru -S"
 alias update="paru -Syu"
+{{ else if (eq .chezmoi.osRelease.idLike "ubuntu debian")}}
+alias steal="sudo apt install"
+alias update="sudo apt update -y && sudo apt upgrade"
+{{ end }}
 
 alias connect="nmcli device wifi connect"
 
