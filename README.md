@@ -6,6 +6,21 @@ documentation needs much much much work
 
 I use chezmoi to manage all of this, big reccomend it
 
+## Application List
+
+### Requirements
+* golang over 1.16
+* zsh
+* emacs
+* doom emacs
+* neovim
+
+### Nice to haves
+
+* asdf manager
+* redshift(for wallpaper changing)
+
+
 ## Setup
 
 you need to install chezmoi first so uh do that
@@ -24,6 +39,18 @@ $ chezmoi add <File Name>
 $ chezmoi git add .
 
 $ chezmoi git commit
+```
+
+## Executing and testing templates
+
+```
+$ cat <Template Name> | chezmoi execute-template
+```
+
+## Changing directory to chezmoi
+
+```
+$ chezmoi cd
 ```
 
 ## Editing files
@@ -61,8 +88,6 @@ i fixed the perms issue
 * Add other smart-tabs language support for used langs
 
 * Figure out variables for configs
-
-* Standardize and list down actual system requirements
 
 * Add fonts to this
 
