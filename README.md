@@ -11,6 +11,7 @@ I use chezmoi to manage all of this, big reccomend it
 ### Applications and why I use them
 
 |Software Name| What it is | why I use it|
+--- | --- | ---
 |chezmoi|A script and configuration management system| It has a ton of support for nice stuff like zsh autocomplete, templating based off system variables, and permissions persistence of configs|
 |golang|A programming language, like modern version of C| I have alot of thoughts about it but overall its pretty cool|
 |zsh|A shell| Overall it has alot of nice features that bash doesnt have like autocomplete, nicer history, spell check|
