@@ -104,14 +104,14 @@
 # Font configuration
 font:
   # Normal (roman) font face
-  #normal:
+  normal:
     # Font family
     #
     # Default:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    #family: monospace
+    family: Ubuntu Mono
 
     # The `style` can be specified to pick a specific face.
     #style: Regular
@@ -150,7 +150,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 15.0
+  size: 24.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -174,13 +174,39 @@ font:
 
 # If `true`, bold text is drawn using the bright color variants.
 #draw_bold_text_with_bright_colors: false
-
 # Colors (Tomorrow Night)
-#colors:
+colors:
   # Default colors
-  #primary:
-  #  background: '#1d1f21'
-  #  foreground: '#c5c8c6'
+  primary:
+    background: '#1d1f21'
+    foreground: '#c5c8c6'
+
+  # Colors the cursor will use if `custom_cursor_colors` is true
+  cursor:
+    text: '#1d1f21'
+    cursor: '#ffffff'
+
+  # Normal colors
+  normal:
+    black:   '#1d1f21'
+    red:     '#cc6666'
+    green:   '#b5bd68'
+    yellow:  '#e6c547'
+    blue:    '#81a2be'
+    magenta: '#b294bb'
+    cyan:    '#70c0ba'
+    white:   '#373b41'
+
+  # Bright colors
+  bright:
+    black:   '#666666'
+    red:     '#ff3334'
+    green:   '#9ec400'
+    yellow:  '#f0c674'
+    blue:    '#81a2be'
+    magenta: '#b77ee0'
+    cyan:    '#54ced6'
+    white:   '#282a2e'
 
     # Bright and dim foreground colors
     #
@@ -190,16 +216,6 @@ font:
     # color will be used.
     #dim_foreground: '#828482'
     #bright_foreground: '#eaeaea'
-
-  # Cursor colors
-  #
-  # Colors which should be used to draw the terminal cursor.
-  #
-  # Allowed values are CellForeground/CellBackground, which reference the
-  # affected cell, or hexadecimal colors like #ff00ff.
-  #cursor:
-  #  text: CellBackground
-  #  cursor: CellForeground
 
   # Vi mode cursor colors
   #
@@ -367,16 +383,16 @@ font:
   # When set to `true`, selected text will be copied to the primary clipboard.
   #save_to_clipboard: false
 
-#cursor:
+cursor:
   # Cursor style
-  #style:
+  style:
     # Cursor shape
     #
     # Values for `shape`:
     #   - ▇ Block
     #   - _ Underline
     #   - | Beam
-    #shape: Block
+    shape: Beam
 
     # Cursor blinking state
     #
@@ -385,7 +401,7 @@ font:
     #   - Off: Disable blinking by default
     #   - On: Enable blinking by default
     #   - Always: Force the cursor to always blink
-    #blinking: Off
+    blinking: Off
 
   # Vi mode cursor style
   #
@@ -393,7 +409,7 @@ font:
   # the style of the active value of the normal cursor.
   #
   # See `cursor.style` for available options.
-  #vi_mode_style: None
+  #vi_mode_style: Block
 
   # Cursor blinking interval in milliseconds.
   #blink_interval: 750
@@ -407,7 +423,7 @@ font:
   #thickness: 0.15
 
 # Live config reload (changes require restart)
-#live_config_reload: true
+live_config_reload: true
 
 # Shell
 #
