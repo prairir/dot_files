@@ -1,8 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH="{{.chezmoi.homeDir}}/.oh-my-zsh"
 
-ZSH_THEME="birame"
-
 ENABLE_CORRECTION="true"
 
 export EDITOR="nvim"
@@ -42,6 +40,8 @@ export PATH="$PATH:$HOME/go/bin"
 export PATH="$PATH:$(go env GOPATH)/bin"
 export PATH="$PATH:~/scripts"
 
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 
 source $HOME/.asdf/asdf.sh
+
+eval "$(starship init zsh)"

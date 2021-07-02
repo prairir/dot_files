@@ -1,0 +1,28 @@
+# ~/.config/starship.toml
+
+# prompt format
+format = """
+[╭──](bold gray)[⟰](bold green) $directory [<$git_status$git_branch>](bold yellow)
+[╰─](bold gray)$character """
+
+# Wait 10 milliseconds for starship to check files under the current directory.
+scan_timeout = 10
+
+# Disable the blank line at the start of the prompt
+add_newline = false
+
+[directory]
+truncation_length=0
+truncate_to_repo=false
+style="bold blue"
+
+[character]
+success_symbol="[⧁](bold gray)"
+error_symbol="[⮿](bold red)"
+
+[git_status]
+format="$modified"
+modified="*"
+
+[git_branch]
+format="$branch"
