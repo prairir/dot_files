@@ -10,19 +10,19 @@ I use chezmoi to manage all of this, big reccomend it
 
 ### Applications and why I use them
 
-|Software Name| What it is | why I use it|
---- | --- | ---
-|chezmoi|A script and configuration management system| It has a ton of support for nice stuff like zsh autocomplete, templating based off system variables, and permissions persistence of configs|
-|golang|A programming language, like modern version of C| I have alot of thoughts about it but overall its pretty cool|
-|zsh|A shell| Overall it has alot of nice features that bash doesnt have like autocomplete, nicer history, spell check|
-|doom emacs|A theme engine ontop of emacs, a configurable lisp machine| Vim bindings, easy configuration, nice lsp support, do I really need to go on?|
-|neovim|A text editor based off of vim| Its faster, has more configurable plugins and settings, more extensible, overall wayy better than vim|
-|rbenv|A ruby version manager|I like the API better than rvm|
-|ruby|A programming language|I inherited a bunch of ruby projects|
-|asdf|A version manager for a ton of programming languages| asdf supports a ton of languages like elixir and ruby|
-|redshift|A screen temperature changing| It has nice hooks to run commands based on time of day(like changinge wallpaper)|
-|i3|A window manager| I only use this on my laptop because at the time, it was the best. Now on my desktop I use COSMIC with pop os(maybe will change)|
-|polybar|A bar for your desktop, think toolbar on windows|I only use this on my laptop to use with i3|
+|Software Name| What it is | Why I use it | Where I use it|
+--- | --- | --- | ---
+|chezmoi|A script and configuration management system| It has a ton of support for nice stuff like zsh autocomplete, templating based off system variables, and permissions persistence of configs | both|
+|golang|A programming language, like modern version of C| I have alot of thoughts about it but overall its pretty cool | both|
+|zsh|A shell| Overall it has alot of nice features that bash doesnt have like autocomplete, nicer history, spell check | both|
+|doom emacs|A theme engine ontop of emacs, a configurable lisp machine| Vim bindings, easy configuration, nice lsp support, do I really need to go on?| both|
+|neovim|A text editor based off of vim| Its faster, has more configurable plugins and settings, more extensible, overall wayy better than vim | both|
+|rbenv|A ruby version manager|I like the API better than rvm | both|
+|ruby|A programming language|I inherited a bunch of ruby projects| both|
+|asdf|A version manager for a ton of programming languages| asdf supports a ton of languages like elixir and ruby| both|
+|redshift|A screen temperature changing| It has nice hooks to run commands based on time of day(like changinge wallpaper)| Currently only laptop|
+|i3|A window manager| I only use this on my laptop because at the time, it was the best. Now on my desktop I use COSMIC with pop os(maybe will change) | laptop|
+|polybar|A bar for your desktop, think toolbar on windows|I only use this on my laptop to use with i3 | laptop|
 
 ### Requirements
 * golang over 1.16
@@ -36,6 +36,10 @@ I use chezmoi to manage all of this, big reccomend it
 
 * i3(only if on my laptop)
 * polybar(same as above)
+
+**FONTS**
+* [Ubuntu Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/UbuntuMono.zip)
+* [Fira Code](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip)
 
 ### Nice to haves
 
@@ -118,7 +122,5 @@ i fixed the perms issue
 * Add other smart-tabs language support for used langs
 
 * Figure out variables for configs
-
-* Add fonts to this
 
 * Add reallllllllly old dot files like tmux, vim, old weird scripts, etc
