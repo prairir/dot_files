@@ -14,25 +14,29 @@ I use chezmoi to manage all of this, big reccomend it
 --- | --- | --- | ---
 |chezmoi|A script and configuration management system| It has a ton of support for nice stuff like zsh autocomplete, templating based off system variables, and permissions persistence of configs | both|
 |golang|A programming language, like modern version of C| I have alot of thoughts about it but overall its pretty cool | both|
+|rust| A programming language, memory safety with ***SPEEEEEDDD***| Its cool for things| both|
+|ruby|A programming language|I inherited a bunch of ruby projects| both|
+|rbenv|A ruby version manager|I like the API better than rvm | both|
+|asdf|A version manager for a ton of programming languages| asdf supports a ton of languages like elixir and ruby| both|
 |zsh|A shell| Overall it has alot of nice features that bash doesnt have like autocomplete, nicer history, spell check | both|
 |doom emacs|A theme engine ontop of emacs, a configurable lisp machine| Vim bindings, easy configuration, nice lsp support, do I really need to go on?| both|
 |neovim|A text editor based off of vim| Its faster, has more configurable plugins and settings, more extensible, overall wayy better than vim | both|
-|rbenv|A ruby version manager|I like the API better than rvm | both|
-|ruby|A programming language|I inherited a bunch of ruby projects| both|
-|asdf|A version manager for a ton of programming languages| asdf supports a ton of languages like elixir and ruby| both|
 |redshift|A screen temperature changing| It has nice hooks to run commands based on time of day(like changinge wallpaper)| Currently only laptop|
 |i3|A window manager| I only use this on my laptop because at the time, it was the best. Now on my desktop I use COSMIC with pop os(maybe will change) | laptop|
 |polybar|A bar for your desktop, think toolbar on windows|I only use this on my laptop to use with i3 | laptop|
+|alacritty| A terminal emulator| Its fast and configurable, has a cool vim mode| desktop|
 
 ### Requirements
-* golang over 1.16
+* alacritty
 * zsh
 * emacs
 * doom emacs
 * neovim
 * rbenv
-* ruby
 * asdf manager
+* ruby
+* golang over 1.16
+* latest stable rust
 
 * i3(only if on my laptop)
 * polybar(same as above)
