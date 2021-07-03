@@ -27,11 +27,13 @@
 ;;fonts and themes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq doom-font (font-spec :family "Ubuntu Mono Nerd Font" :size 22)
-      doom-variable-pitch-font (font-spec :family "Ubuntu Mono Nerd Font" :size 22))
+
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 22)
+      doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font" :size 22))
 
 ;; font for emojis
-(set-fontset-font t 'symbol "JoyPixels" nil 'append)
+(set-fontset-font t 'symbol "Twitter Color Emoji" nil 'append)
+
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
