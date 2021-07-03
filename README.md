@@ -35,15 +35,28 @@ I use chezmoi to manage all of this, big reccomend it
 * rbenv
 * asdf manager
 * ruby
+* rust
 * golang over 1.16
 * latest stable rust
 
+**LAPTOP ONLY**
 * i3(only if on my laptop)
 * polybar(same as above)
+
+**PACKAGE MANAGERS**
+* cargo
+* yarn
+* pip
+
+**BUILD TOOLS**
+* CMAKE
+* rustc
+* make
 
 **FONTS**
 * [Ubuntu Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/UbuntuMono.zip)
 * [Fira Code](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip)
+* [Twitter emoji](https://github.com/eosrei/twemoji-color-font)
 
 ### Nice to haves
 
@@ -62,6 +75,8 @@ I use chezmoi to manage all of this, big reccomend it
 ## Setup
 
 you need to install chezmoi first so uh do that
+
+I will eventually write a guide on how to install start to finish
 
 ### Clone
 
