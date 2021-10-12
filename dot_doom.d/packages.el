@@ -62,3 +62,6 @@
 
 ;; hcl support
 (package! hcl-mode)
+
+;; earthfile support
+(package! earthfile-mode)
