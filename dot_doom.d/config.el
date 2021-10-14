@@ -170,4 +170,7 @@
 ;; set the file type
 (setq doom-modeline-buffer-file-name-style 'relative-to-project)
 
+;; projectile config
+(setq projectile-project-search-path '("~/dev/" "~/uni/" "~/.local/share/chezmoi"))
+
 ;;; config.el ends here
