@@ -22,7 +22,7 @@ alias steal="paru -S"
 alias update="paru -Syu"
 {{ else if (eq .chezmoi.osRelease.idLike "ubuntu debian")}}
 alias steal="sudo apt install"
-alias update="sudo apt update -y && sudo apt upgrade"
+alias update='sudo apt update -y && sudo apt upgrade'
 {{ end }}
 
 alias connect="nmcli device wifi connect"
@@ -36,11 +36,14 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # exports
+export PATH="$PATH:/usr/local/"
 export PATH="$HOME/.emacs.d/bin:$PATH"
 export PATH="$PATH:~/.cargo/bin"
 export PATH="$PATH:/usr/local/go/bin"
 export PATH="$PATH:$HOME/go/bin"
 export PATH="$PATH:$(go env GOPATH)/bin"
+export PATH="$PATH:/usr/local/bin/idea-IU-213.6461.79/bin"
+export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 
 
 # spicetify
