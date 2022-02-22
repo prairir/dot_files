@@ -39,12 +39,18 @@ source $ZSH/oh-my-zsh.sh
 export PATH="$PATH:/usr/local/"
 export PATH="$HOME/.emacs.d/bin:$PATH"
 export PATH="$PATH:~/.cargo/bin"
-export PATH="$PATH:/usr/local/go/bin"
-export PATH="$PATH:$HOME/go/bin"
-export PATH="$PATH:$(go env GOPATH)/bin"
+#export PATH="$PATH:/usr/local/go/bin"
+#export PATH="$PATH:$HOME/go/bin"
+#export PATH="$PATH:$(go env GOPATH)/bin"
+export PATH="$PATH:$HOME/go/bin" # This is to satisfy some tools that i installed before i used go with asdf
 export PATH="$PATH:/usr/local/bin/idea-IU-213.6461.79/bin"
 export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 
+# java stuff for trexo
+export PATH="/usr/lib/jvm/graalvm-ce-java17-22.0.0.2/bin:$PATH"
+
+# java stuff for trexo
+export JAVA_HOME="/usr/lib/jvm/graalvm-ce-java17-22.0.0.2"
 
 # spicetify
 export SPICETIFY_INSTALL="/home/ryan/spicetify-cli"
