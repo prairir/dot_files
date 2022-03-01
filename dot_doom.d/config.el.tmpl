@@ -115,8 +115,11 @@
 (setq custom-tab-width-alt 4)
 
 ;; Two callable functions for enabling/disabling tabs in Emacs
-(defun disable-tabs () (setq indent-tabs-mode nil))
+(defun disable-tabs () 
+  (interactive)
+  (setq indent-tabs-mode nil))
 (defun enable-tabs  ()
+  (interactive)
   (local-set-key (kbd "TAB") 'tab-to-tab-stop)
   (setq indent-tabs-mode t)
   (setq tab-width custom-tab-width))
