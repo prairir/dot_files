@@ -58,6 +58,10 @@ export PATH="$SPICETIFY_INSTALL:$PATH"
 
 export PATH="$PATH:~/scripts"
 
+# this is to fix a stupid bug with gnome, gtk, and alacritty
+# basically the top bar gets weird when using wayland
+export WAYLAND_DISPLAY=alacritty
+
 eval "$(rbenv init -)"
 
 source $HOME/.asdf/asdf.sh
