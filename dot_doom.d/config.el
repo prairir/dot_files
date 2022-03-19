@@ -136,6 +136,7 @@
 ;;(setq web-mode-code-indent-offset 4)
 (setq web-mode-script-padding custom-tab-width)
 
+(setq typescript-indent-level custom-tab-width)
 ;; c tab size
 (setq-default c-basic-offset custom-tab-width)
 
