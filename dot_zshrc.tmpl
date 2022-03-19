@@ -9,7 +9,7 @@ export TERM="xterm-256color"
 export term="xterm-256color"
 
 # alias'
-alias ll="ls -lh"
+alias ll="ls -lah"
 alias la="ls -lAah"
 
 alias up="cd .."
@@ -18,10 +18,11 @@ alias vim="nvim"
 
 alias cls="clear"
 {{ if (eq .chezmoi.osRelease.idLike "arch")}}
-alias steal="paru -S" alias update="paru -Syu"
+alias steal="paru -S"
+alias update="paru -Syu"
 {{ else if (eq .chezmoi.osRelease.idLike "ubuntu debian")}}
 alias steal="sudo apt install"
-alias update="sudo apt update -y && sudo apt upgrade"
+alias update='sudo apt update -y && sudo apt upgrade'
 {{ end }}
 
 alias connect="nmcli device wifi connect"
@@ -35,15 +36,32 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # exports
+export PATH="$PATH:/home/ryan/.local/bin"
+export PATH="$PATH:/usr/local/"
 export PATH="$HOME/.emacs.d/bin:$PATH"
-export PATH="$PATH:~/.cargo/bin"
-export PATH="$PATH:$HOME/go/bin"
-export PATH="$PATH:$(go env GOPATH)/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
+#export PATH="$PATH:/usr/local/go/bin"
+#export PATH="$PATH:$HOME/go/bin"
+#export PATH="$PATH:$(go env GOPATH)/bin"
+export PATH="$PATH:$HOME/go/bin" # This is to satisfy some tools that i installed before i used go with asdf
+export PATH="$PATH:/usr/local/bin/idea-IU-213.6461.79/bin"
+export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 
+# java stuff for trexo
+export PATH="/usr/lib/jvm/graalvm-ce-java17-22.0.0.2/bin:$PATH"
+
+# java stuff for trexo
+export JAVA_HOME="/usr/lib/jvm/graalvm-ce-java17-22.0.0.2"
 
 # spicetify
 export SPICETIFY_INSTALL="/home/ryan/spicetify-cli"
-export PATH="$SPICETIFY_INSTALL:$PATH"xport PATH="$PATH:~/scripts"
+export PATH="$SPICETIFY_INSTALL:$PATH"
+
+export PATH="$PATH:$HOME/scripts"
+
+# this is to fix a stupid bug with gnome, gtk, and alacritty
+# basically the top bar gets weird when using wayland
+export WAYLAND_DISPLAY=alacritty
 
 eval "$(rbenv init -)"
 

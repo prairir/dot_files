@@ -35,9 +35,10 @@ I use chezmoi to manage all of this, big reccomend it
 * rbenv
 * asdf manager
 * ruby
-* rust
 * golang over 1.16
 * latest stable rust
+* vim plug for neovim
+* Intellij (preferably ultimate edition)
 
 **LAPTOP ONLY**
 * i3(only if on my laptop)
