@@ -65,3 +65,5 @@
 
 ;; earthfile support
 (package! earthfile-mode)
+
+(package! project :pin "5347dfc5f32b0408bf4ff7bbace7b2356cf59a8f") ; TODO: check when remove
