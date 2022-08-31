@@ -42,8 +42,7 @@ export PATH="$HOME/.emacs.d/bin:$PATH"
 export PATH="$PATH:$HOME/.cargo/bin"
 #export PATH="$PATH:/usr/local/go/bin"
 #export PATH="$PATH:$HOME/go/bin"
-#export PATH="$PATH:$(go env GOPATH)/bin"
-export PATH="$PATH:$HOME/go/bin" # This is to satisfy some tools that i installed before i used go with asdf
+#export PATH="$PATH:$HOME/go/bin" # This is to satisfy some tools that i installed before i used go with asdf
 export PATH="$PATH:/usr/local/bin/idea-IU-213.6461.79/bin"
 export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 
@@ -66,5 +65,8 @@ export WAYLAND_DISPLAY=alacritty
 eval "$(rbenv init -)"
 
 source $HOME/.asdf/asdf.sh
+
+export PATH="$PATH:$(go env GOPATH)/bin"
+export PATH="$PATH:$(go env GOROOT)/bin"
 
 eval "$(starship init zsh)"

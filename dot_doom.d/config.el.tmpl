@@ -68,6 +68,7 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/notes/")
+(setq org-roam-directory "~/notes/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -110,59 +111,59 @@
 
 ;; this is basically a rip from https://dougie.io/emacs/indentation/
 ;; i took what i liked and changed what i didn't
-
+(setq indent-tabs-mode nil)
 
 ;; custom tab width
-(setq custom-tab-width 2)
-(setq custom-tab-width-alt 4)
-
-;; Two callable functions for enabling/disabling tabs in Emacs
-(defun disable-tabs () 
-  (interactive)
-  (setq indent-tabs-mode nil))
-(defun enable-tabs  ()
-  (interactive)
-  (local-set-key (kbd "TAB") 'tab-to-tab-stop)
-  (setq indent-tabs-mode t)
-  (setq tab-width custom-tab-width))
-
-;; Hooks to Enable Tabs
-(add-hook 'prog-mode-hook 'enable-tabs)
-
-;; Hooks to Disable Tabs
-(add-hook 'lisp-mode-hook 'disable-tabs)
-(add-hook 'emacs-lisp-mode-hook 'disable-tabs)
-
-;; Language-Specific Tweaks
-(setq-default python-indent-offset custom-tab-width-alt) ;; Python
-
-;; js acts weird with indents
-(setq-default js2-basic-offset custom-tab-width)
-(setq-default js-indent-level custom-tab-width)
-
-;; for web indentation
-;;(setq web-mode-markup-indent-offset 4)
-;;(setq web-mode-css-indent-offset 4)
-;;(setq web-mode-code-indent-offset 4)
-(setq web-mode-script-padding custom-tab-width)
-
-(setq typescript-indent-level custom-tab-width)
-;; c tab size
-(setq-default c-basic-offset custom-tab-width)
-
-;; Making electric-indent behave sanely
-(setq-default electric-indent-inhibit t)
-
-;; Make the backspace properly erase the tab instead of
-;; removing 1 space at a time.
-(setq backward-delete-char-untabify-method 'hungry)
-
-;; for '>>' or '<<' with custom tab widths
-(setq-default evil-shift-width custom-tab-width)
-
-;; smart tabs
-;;(smart-tabs-insinuate 'c 'javascript 'python 'elixir 'go)
-(smart-tabs-insinuate 'c 'javascript )
+;;(setq custom-tab-width 2)
+;;(setq custom-tab-width-alt 4)
+;;
+;;;; Two callable functions for enabling/disabling tabs in Emacs
+;;(defun disable-tabs () 
+;;  (interactive)
+;;  (setq indent-tabs-mode nil))
+;;(defun enable-tabs  ()
+;;  (interactive)
+;;  (local-set-key (kbd "TAB") 'tab-to-tab-stop)
+;;  (setq indent-tabs-mode t)
+;;  (setq tab-width custom-tab-width))
+;;
+;;;; Hooks to Enable Tabs
+;;;;(add-hook 'prog-mode-hook 'enable-tabs)
+;;
+;;;; Hooks to Disable Tabs
+;;(add-hook 'lisp-mode-hook 'disable-tabs)
+;;(add-hook 'emacs-lisp-mode-hook 'disable-tabs)
+;;
+;;;; Language-Specific Tweaks
+;;(setq-default python-indent-offset custom-tab-width-alt) ;; Python
+;;
+;;;; js acts weird with indents
+;;(setq-default js2-basic-offset custom-tab-width)
+;;(setq-default js-indent-level custom-tab-width)
+;;
+;;;; for web indentation
+;;;;(setq web-mode-markup-indent-offset 4)
+;;;;(setq web-mode-css-indent-offset 4)
+;;;;(setq web-mode-code-indent-offset 4)
+;;(setq web-mode-script-padding custom-tab-width)
+;;
+;;(setq typescript-indent-level custom-tab-width)
+;;;; c tab size
+;;(setq-default c-basic-offset custom-tab-width)
+;;
+;;;; Making electric-indent behave sanely
+;;(setq-default electric-indent-inhibit t)
+;;
+;;;; Make the backspace properly erase the tab instead of
+;;;; removing 1 space at a time.
+;;(setq backward-delete-char-untabify-method 'hungry)
+;;
+;;;; for '>>' or '<<' with custom tab widths
+;;(setq-default evil-shift-width custom-tab-width)
+;;
+;;;; smart tabs
+;;;;(smart-tabs-insinuate 'c 'javascript 'python 'elixir 'go)
+;;;;(smart-tabs-insinuate 'c 'javascript )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; emojis stuff

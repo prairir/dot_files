@@ -66,4 +66,11 @@
 ;; earthfile support
 (package! earthfile-mode)
 
+;; gleam mode
+(package! tree-sitter-indent)
+(package! gleam-mode :recipe
+  (:host github
+   :repo "gleam-lang/gleam-mode"
+   :files ("*.el" "tree-sitter-gleam")))
+
 (package! project :pin "5347dfc5f32b0408bf4ff7bbace7b2356cf59a8f") ; TODO: check when remove
