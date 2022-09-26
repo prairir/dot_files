@@ -72,7 +72,8 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
+(setq display-line-numbers 'relative)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -104,11 +105,6 @@
                                                (kbd "g <left>")  'centaur-tabs-backward       ; default Doom binding is 'g T'
                                                (kbd "g <down>")  'centaur-tabs-forward-group
                                                (kbd "g <up>")    'centaur-tabs-backward-group)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; RELATIVE LINE NUMBER
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq display-line-numbers 'relative)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INDENT TABS STUFF
