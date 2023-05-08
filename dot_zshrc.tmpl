@@ -29,6 +29,7 @@ alias info="info --vi-keys"
 
 alias spotify="ncspot"
 
+
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
@@ -68,3 +69,8 @@ export PATH="$PATH:$(go env GOPATH)/bin"
 export PATH="$PATH:$(go env GOROOT)/bin"
 
 eval "$(starship init zsh)"
+
+alias asdfudo="sudo -E env \"PATH=$PATH"\"
+
+GOV=$(asdf where golang)
+export GOROOT=$GOV/go
