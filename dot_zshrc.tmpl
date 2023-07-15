@@ -14,11 +14,13 @@ alias la="ls -laAh"
 
 alias up="cd .."
 
+## `(eq (get .<map> <key>) <expected value>)` is a workaround so key not existing doesnt crash
+
 alias cls="clear"
-{{ if (eq .chezmoi.osRelease.idLike "arch")}}
+{{ if (eq (get .chezmoi.osRelease "idLike") "arch")}}
 alias steal="paru -S"
 alias update="paru -Syu"
-{{ else if (eq .chezmoi.osRelease.idLike "ubuntu debian")}}
+{{ else if (eq (get .chezmoi.osRelease "idLike") "ubuntu debian")}}
 alias steal="sudo apt install"
 alias update='sudo apt update -y && sudo apt upgrade'
 {{ end }}
