@@ -14,22 +14,25 @@ alias la="ls -laAh"
 
 alias up="cd .."
 
-## `(eq (get .<map> <key>) <expected value>)` is a workaround so key not existing doesnt crash
-
 alias cls="clear"
-{{ if (eq (get .chezmoi.osRelease "idLike") "arch")}}
-alias steal="paru -S"
-alias update="paru -Syu"
-{{ else if (eq (get .chezmoi.osRelease "idLike") "ubuntu debian")}}
-alias steal="sudo apt install"
-alias update='sudo apt update -y && sudo apt upgrade'
-{{ end }}
 
-alias connect="nmcli device wifi connect"
+if [ -x "$(command -v paru)" ]; then
+	alias steal="paru -S"
+	alias update="paru -Syu"
+elif [ -x "$(command -v apt)" ]; then
+	alias steal="sudo apt install"
+	alias update='sudo apt update -y && sudo apt upgrade'
+fi
+
+if [ -x "$(command -v nmcli)" ]; then
+	alias connect="nmcli device wifi connect"
+fi
 
 alias info="info --vi-keys"
 
-alias spotify="ncspot"
+if [ -x "$(command -v ncspot)" ]; then
+	alias spotify="ncspot"
+fi
 
 
 plugins=(git)
@@ -45,13 +48,16 @@ export PATH="$PATH:$HOME/.cargo/bin"
 #export PATH="$PATH:$HOME/go/bin"
 #export PATH="$PATH:$HOME/go/bin" # This is to satisfy some tools that i installed before i used go with asdf
 export PATH="$PATH:/usr/local/bin/idea-IU-213.6461.79/bin"
-export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 
 # java stuff for trexo
-export PATH="/usr/lib/jvm/graalvm-ce-java17-22.0.0.2/bin:$PATH"
+if [ -d "/usr/lib/jvm/graalvm-ce-java17-22.0.0.2/bin" ]; then
+	export PATH="/usr/lib/jvm/graalvm-ce-java17-22.0.0.2/bin:$PATH"
+fi
 
 # java stuff for trexo
-export JAVA_HOME="/usr/lib/jvm/graalvm-ce-java17-22.0.0.2"
+if [ -d "/usr/lib/jvm/graalvm-ce-java17-22.0.0.2" ]; then
+	export JAVA_HOME="/usr/lib/jvm/graalvm-ce-java17-22.0.0.2"
+fi
 
 # spicetify
 export SPICETIFY_INSTALL="/home/ryan/spicetify-cli"
@@ -63,16 +69,29 @@ export PATH="$PATH:$HOME/scripts"
 # basically the top bar gets weird when using wayland
 export WAYLAND_DISPLAY=alacritty
 
-eval "$(rbenv init -)"
+if [ -x "$(command -v rbenv)" ]; then
+	eval "$(rbenv init -)"
+fi
 
-source $HOME/.asdf/asdf.sh
+if [ -d "$HOME/.asdf/asdf.sh" ]; then
+	source $HOME/.asdf/asdf.sh
 
-export PATH="$PATH:$(go env GOPATH)/bin"
-export PATH="$PATH:$(go env GOROOT)/bin"
+	GOV=$(asdf where golang)
+	export GOROOT=$GOV/go
+fi
 
-eval "$(starship init zsh)"
+if [ -x "$(command -v go)" ]; then
+	export PATH="$PATH:$(go env GOPATH)/bin"
+	export PATH="$PATH:$(go env GOROOT)/bin"
+fi
+
+if [ -x "$(command -v rustc)" ]; then
+	export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
+fi
+
+if [ -x "$(command -v starship)" ]; then
+	eval "$(starship init zsh)"
+fi
 
 alias asdfudo="sudo -E env \"PATH=$PATH"\"
 
-GOV=$(asdf where golang)
-export GOROOT=$GOV/go
