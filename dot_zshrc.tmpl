@@ -16,21 +16,21 @@ alias up="cd .."
 
 alias cls="clear"
 
-if [ -x "$(command -v paru)" ]; then
+if [[ -x "$(command -v paru)" ]]; then
 	alias steal="paru -S"
 	alias update="paru -Syu"
-elif [ -x "$(command -v apt)" ]; then
+elif [[ -x "$(command -v apt)" ]]; then
 	alias steal="sudo apt install"
 	alias update='sudo apt update -y && sudo apt upgrade'
 fi
 
-if [ -x "$(command -v nmcli)" ]; then
+if [[ -x "$(command -v nmcli)" ]]; then
 	alias connect="nmcli device wifi connect"
 fi
 
 alias info="info --vi-keys"
 
-if [ -x "$(command -v ncspot)" ]; then
+if [[ -x "$(command -v ncspot)" ]]; then
 	alias spotify="ncspot"
 fi
 
@@ -50,12 +50,12 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:/usr/local/bin/idea-IU-213.6461.79/bin"
 
 # java stuff for trexo
-if [ -d "/usr/lib/jvm/graalvm-ce-java17-22.0.0.2/bin" ]; then
+if [[ -d "/usr/lib/jvm/graalvm-ce-java17-22.0.0.2/bin" ]]; then
 	export PATH="/usr/lib/jvm/graalvm-ce-java17-22.0.0.2/bin:$PATH"
 fi
 
 # java stuff for trexo
-if [ -d "/usr/lib/jvm/graalvm-ce-java17-22.0.0.2" ]; then
+if [[ -d "/usr/lib/jvm/graalvm-ce-java17-22.0.0.2" ]]; then
 	export JAVA_HOME="/usr/lib/jvm/graalvm-ce-java17-22.0.0.2"
 fi
 
@@ -69,27 +69,27 @@ export PATH="$PATH:$HOME/scripts"
 # basically the top bar gets weird when using wayland
 export WAYLAND_DISPLAY=alacritty
 
-if [ -x "$(command -v rbenv)" ]; then
+if [[ -x "$(command -v rbenv)" ]]; then
 	eval "$(rbenv init -)"
 fi
 
-if [ -d "$HOME/.asdf/asdf.sh" ]; then
+if [[ -a "$HOME/.asdf/asdf.sh" ]]; then
 	source $HOME/.asdf/asdf.sh
 
 	GOV=$(asdf where golang)
 	export GOROOT=$GOV/go
 fi
 
-if [ -x "$(command -v go)" ]; then
+if [[ -x "$(command -v go)" ]]; then
 	export PATH="$PATH:$(go env GOPATH)/bin"
 	export PATH="$PATH:$(go env GOROOT)/bin"
 fi
 
-if [ -x "$(command -v rustc)" ]; then
+if [[ -x "$(command -v rustc)" ]]; then
 	export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 fi
 
-if [ -x "$(command -v starship)" ]; then
+if [[ -x "$(command -v starship)" ]]; then
 	eval "$(starship init zsh)"
 fi
 
