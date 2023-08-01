@@ -2,7 +2,7 @@
 
 # prompt format
 format = """
-[╭──](bold gray)[⟰](bold green) $directory [(<$git_branch$git_status>)](bold yellow) [$status](bold red)
+[╭──](bold gray)[⟰](bold green) $container$directory [(<$git_branch$git_status>)](bold yellow) [$status](bold red)
 [╰─](bold gray)$character"""
 
 # Wait 10 milliseconds for starship to check files under the current directory.
@@ -10,6 +10,10 @@ scan_timeout = 10
 
 # Disable the blank line at the start of the prompt
 add_newline = false
+
+[container]
+symbol="⬢"
+format="[$symbol](bold red dimmed) "
 
 [directory]
 truncation_length=0
