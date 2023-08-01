@@ -40,7 +40,8 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # exports
-export PATH="$PATH:/home/ryan/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/bin"
 export PATH="$PATH:/usr/local/"
 export PATH="$HOME/.emacs.d/bin:$PATH"
 export PATH="$PATH:$HOME/.cargo/bin"
@@ -60,7 +61,7 @@ if [[ -d "/usr/lib/jvm/graalvm-ce-java17-22.0.0.2" ]]; then
 fi
 
 # spicetify
-export SPICETIFY_INSTALL="/home/ryan/spicetify-cli"
+export SPICETIFY_INSTALL="$HOME/spicetify-cli"
 export PATH="$SPICETIFY_INSTALL:$PATH"
 
 export PATH="$PATH:$HOME/scripts"
