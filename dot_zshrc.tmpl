@@ -94,5 +94,10 @@ if [[ -x "$(command -v starship)" ]]; then
 	eval "$(starship init zsh)"
 fi
 
+if [[ -x "$(command -v zoxide)" ]]; then
+  eval "$(zoxide init zsh)"
+fi
+
+
 alias asdfudo="sudo -E env \"PATH=$PATH"\"
 
