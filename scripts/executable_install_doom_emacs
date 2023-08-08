@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -o nounset
+
+git clone --depth 1 https://github.com/doomemacs/doomemacs "$XDG_CONFIG_HOME"/emacs
+
+"$XDG_CONFIG_HOME"/emacs/bin/doom install
+
+if [[ -d "$XDG_CONFIG_HOME"/emacs && -d "$HOME"/.emacs.d ]]; then
+  rm -rf "$HOME"/.emacs.d
+  echo "deleted $HOME/.emacs.d"
+fi 
+
+if [[ -x "$(command -v distrobox-export)" ]]; then
+  distrobox-export --app emacs
+fi
