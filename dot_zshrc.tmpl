@@ -45,6 +45,11 @@ export PATH="$PATH:$HOME/bin"
 export PATH="$PATH:/usr/local/"
 export PATH="$HOME/.emacs.d/bin:$PATH"
 export PATH="$PATH:$HOME/.cargo/bin"
+
+if [[ -d "$HOME/.config/emacs/bin" ]]; then
+  export PATH="$PATH:$HOME/.config/emacs/bin"
+fi 
+
 #export PATH="$PATH:/usr/local/go/bin"
 #export PATH="$PATH:$HOME/go/bin"
 #export PATH="$PATH:$HOME/go/bin" # This is to satisfy some tools that i installed before i used go with asdf
@@ -65,6 +70,7 @@ export SPICETIFY_INSTALL="$HOME/spicetify-cli"
 export PATH="$SPICETIFY_INSTALL:$PATH"
 
 export PATH="$PATH:$HOME/scripts"
+
 
 # this is to fix a stupid bug with gnome, gtk, and alacritty
 # basically the top bar gets weird when using wayland
@@ -101,3 +107,8 @@ fi
 
 alias asdfudo="sudo -E env \"PATH=$PATH"\"
 
+# XDG
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
