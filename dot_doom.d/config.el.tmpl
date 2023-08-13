@@ -28,9 +28,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-{{ if (eq .chezmoi.hostname "rpmk11") }}
+{{ if (eq .chezmoi.hostname "laptop") }}
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 32)
       doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font" :size 32))
+{{ else if (eq .chezmoi.hostname "rpmk11") }}
 {{ else }}
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 22)
       doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font" :size 22))
