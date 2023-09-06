@@ -40,11 +40,23 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # exports
-export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:$HOME/bin"
+if [[ -d "$HOME/.local/bin" ]]; then
+	export PATH="$PATH:$HOME/.local/bin"
+fi
+
+if [[ -d "$HOME/bin" ]]; then
+	export PATH="$PATH:$HOME/bin"
+fi
+
 export PATH="$PATH:/usr/local/"
-export PATH="$HOME/.emacs.d/bin:$PATH"
-export PATH="$PATH:$HOME/.cargo/bin"
+
+if [[ -d "$HOME/.emacs.d/bin" ]]; then
+	export PATH="$HOME/.emacs.d/bin:$PATH"
+fi
+
+if [[ -d "$HOME/.cargo/bin" ]]; then
+	export PATH="$PATH:$HOME/.cargo/bin"
+fi
 
 if [[ -d "$HOME/.config/emacs/bin" ]]; then
   export PATH="$PATH:$HOME/.config/emacs/bin"
@@ -53,7 +65,9 @@ fi
 #export PATH="$PATH:/usr/local/go/bin"
 #export PATH="$PATH:$HOME/go/bin"
 #export PATH="$PATH:$HOME/go/bin" # This is to satisfy some tools that i installed before i used go with asdf
-export PATH="$PATH:/usr/local/bin/idea-IU-213.6461.79/bin"
+if [[ -d "/usr/local/bin/idea-IU-213.6461.79/bin" ]]; then
+	export PATH="$PATH:/usr/local/bin/idea-IU-213.6461.79/bin"
+fi
 
 # java stuff for trexo
 if [[ -d "/usr/lib/jvm/graalvm-ce-java17-22.0.0.2/bin" ]]; then
@@ -66,11 +80,14 @@ if [[ -d "/usr/lib/jvm/graalvm-ce-java17-22.0.0.2" ]]; then
 fi
 
 # spicetify
-export SPICETIFY_INSTALL="$HOME/spicetify-cli"
-export PATH="$SPICETIFY_INSTALL:$PATH"
+if [[ -d "$HOME/spicetify-cli" ]]; then
+	export SPICETIFY_INSTALL="$HOME/spicetify-cli"
+	export PATH="$SPICETIFY_INSTALL:$PATH"
+fi
 
-export PATH="$PATH:$HOME/scripts"
-
+if [[ -d "$HOME/scripts" ]]; then
+	export PATH="$PATH:$HOME/scripts"
+fi
 
 # this is to fix a stupid bug with gnome, gtk, and alacritty
 # basically the top bar gets weird when using wayland
