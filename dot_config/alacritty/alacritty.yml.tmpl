@@ -153,8 +153,10 @@ font:
   # Point size
 {{ if (eq .chezmoi.hostname "rpmk11") }}
   size: 20.0
-{{ else (eq .chezmoi.hostname "laptop")}}
+{{ else if (eq .chezmoi.hostname "laptop") }}
   size: 40.0
+{{ else if ( eq .chezmoi.os "dawrin") }}
+  size: 22.0
 {{ else }}
   size: 28.0
 {{ end }}
