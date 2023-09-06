@@ -121,6 +121,15 @@ if [[ -x "$(command -v zoxide)" ]]; then
   eval "$(zoxide init zsh)"
 fi
 
+# homebrew
+if [[ -d "/opt/homebrew/bin" ]]; then
+	export PATH="$PATH:/opt/homebrew/bin"
+fi
+
+# macports
+if [[ -d "/opt/local/bin" ]]; then
+	export PATH=$PATH:/opt/local/bin
+fi
 
 alias asdfudo="sudo -E env \"PATH=$PATH"\"
 
