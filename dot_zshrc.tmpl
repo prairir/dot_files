@@ -125,12 +125,13 @@ fi
 
 # homebrew
 if [[ -d "/opt/homebrew/bin" ]]; then
-	export PATH="$PATH:/opt/homebrew/bin"
+	eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 # macports
 if [[ -d "/opt/local/bin" ]]; then
-	export PATH=$PATH:/opt/local/bin
+	export PATH="$PATH:/opt/local/bin:/opt/local/sbin"
+	export MANPATH="/opt/local/share/man:$MANPATH"
 fi
 
 alias asdfudo="sudo -E env \"PATH=$PATH"\"
