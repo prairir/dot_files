@@ -62,8 +62,11 @@ window:
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
   #decorations: "full"
+{{ if ( eq .chezmoi.os "darwin") }}
+  decorations: "full"
+{{ else }}
   decorations: "none"
-
+{{ end }}
   # Startup Mode (changes require restart)
   #
   # Values for `startup_mode`:
