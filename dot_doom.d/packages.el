@@ -65,7 +65,3 @@
 
 ;; earthfile support
 (package! earthfile-mode)
-
-;; copilot
-(package! copilot
-  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))

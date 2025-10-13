@@ -205,18 +205,6 @@
 (setq lsp-zig-zls-executable "zls")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; copilot
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; accept completion from copilot and fallback to company
-(use-package! copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("C-<tab>" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion)
-              ("TAB-ESC" . 'copilot-accept-completion-by-word)
-              ("<tab>-<esc>" . 'copilot-accept-completion-by-word)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; custom whatever
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
