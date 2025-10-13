@@ -216,4 +216,18 @@
               ("TAB-ESC" . 'copilot-accept-completion-by-word)
               ("<tab>-<esc>" . 'copilot-accept-completion-by-word)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; custom whatever
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; i lazy
+(evil-ex-define-cmd "W" #'evil-write)
+(evil-ex-define-cmd "Wq" #'evil-save-and-close)
+(evil-ex-define-cmd "wQ" #'evil-save-and-close)
+(evil-ex-define-cmd "WQ" #'evil-save-and-close)
+
+(map!
+ :nv "SPC w O"
+ #'+popup/raise)
+
 ;;; config.el ends here
