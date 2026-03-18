@@ -8,8 +8,13 @@ export EDITOR="nvim"
 export TERM="xterm-256color"
 export term="xterm-256color"
 
+if [[ -x "$(command -v devbox)" ]]; then
+  eval "$(devbox global shellenv --init-hook)"
+fi
+
 # alias'
 alias ll="ls -lah"
+alias l="ls -lah"
 alias la="ls -laAh"
 
 alias up="cd .."
@@ -19,9 +24,11 @@ alias cls="clear"
 if [[ -x "$(command -v paru)" ]]; then
 	alias steal="paru -S"
 	alias update="paru -Syu"
+	alias remove="paru -R"
 elif [[ -x "$(command -v apt)" ]]; then
 	alias steal="sudo apt install"
 	alias update='sudo apt update -y && sudo apt upgrade'
+	alias remove='sudo apt remove'
 fi
 
 if [[ -x "$(command -v nmcli)" ]]; then
@@ -34,11 +41,11 @@ if [[ -x "$(command -v ncspot)" ]]; then
 	alias spotify="ncspot"
 fi
 
-plugins=(git)
-
+# plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # exports
+
 if [[ -d "$HOME/.local/bin" ]]; then
 	export PATH="$PATH:$HOME/.local/bin"
 fi
@@ -93,6 +100,15 @@ if [[ -d "/opt/homebrew/bin" ]]; then
 	eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# flatpak being weird
+if [[ -d "/var/lib/flatpak/exports/share" ]]; then
+	export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share"
+fi
+
+if [[ -d "$HOME/.local/share/flatpak/exports/share" ]]; then
+	export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share"
+fi
+
 # macports
 if [[ -d "/opt/local/bin" ]]; then
 	export PATH="$PATH:/opt/local/bin:/opt/local/sbin"
@@ -116,6 +132,10 @@ if [[ -a "$HOME/.asdf/asdf.sh" ]]; then
 	export GOROOT=$GOV/go
 fi
 
+if [[ -e "$HOME/.1password/agent.sock" ]]; then
+  export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
+fi
+
 if [[ -x "$(command -v go)" ]]; then
 	export PATH="$PATH:$(go env GOPATH)/bin"
 	export PATH="$PATH:$(go env GOROOT)/bin"
@@ -133,6 +153,10 @@ if [[ -x "$(command -v zoxide)" ]]; then
   eval "$(zoxide init zsh)"
 fi
 
+if [[ -x "$(command -v direnv)" ]]; then
+  eval "$(direnv hook zsh)"
+fi
+
 alias asdfudo="sudo -E env \"PATH=$PATH"\"
 
 # XDG
@@ -140,3 +164,5 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
+
+

@@ -66,15 +66,210 @@
       '(doom-dashboard-widget-banner
         doom-dashboard-widget-shortmenu))
 
+
+;; removing `ascii` cause it annoys me
+;; still want github style (:skull:) and unicode (💀)
+(setq emojify-emoji-styles '(github unicode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; notes/org/denote stuff
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/notes/")
-(setq org-roam-directory "~/notes/")
+(setq my/notes-dir (expand-file-name "~/notes"))
+
+(setq org-directory my/notes-dir)
+(setq org-roam-directory my/notes-dir)
+
+;; add timestamp when mark as DONE
+(setq org-log-done 'time)
+
+(defun my/org-toggle-checkbox-presence ()
+  "Toggle checkbox presence for any org list item.
+Works on all list types and supports region operations."
+  (interactive)
+  (if (use-region-p)
+      ;; Process region
+      (let ((beg (region-beginning))
+            (end (region-end))
+            (modified-marker (make-marker)))
+        (set-marker modified-marker end)
+        (save-excursion
+          (goto-char beg)
+          (while (< (point) (marker-position modified-marker))
+            (when (org-at-item-p)
+              (my/org-toggle-checkbox-presence-at-point)
+              ;; Update marker if line length changed
+              (set-marker modified-marker
+                          (+ (marker-position modified-marker)
+                             (- (pos-eol) (pos-bol) (current-indentation))
+                             (if (= (line-number-at-pos) (line-number-at-pos (marker-position modified-marker)))
+                                 (- (current-indentation))
+                               0))))
+            (forward-line 1)
+            (when (eobp) (goto-char (marker-position modified-marker)))))
+        (set-marker modified-marker nil))
+    ;; Process single item
+    (when (org-at-item-p)
+      (my/org-toggle-checkbox-presence-at-point))))
+
+(defun my/org-toggle-checkbox-presence-at-point ()
+  "Add or remove checkbox at the current list item."
+  (save-excursion
+    (beginning-of-line)
+    (let ((bound (save-excursion (end-of-line) (point))))
+      (when (re-search-forward org-list-full-item-re bound t)
+        (goto-char (match-end 1))
+        (if (looking-at "\\[[ X-]\\][ \t]+")
+            ;; Remove checkbox
+            (delete-region (match-beginning 0) (match-end 0))
+          ;; Add checkbox
+          (insert "[ ] "))))))
+
+(map!
+ :after org
+ :map org-mode-map
+ :leader
+ :desc "toggle checkbox presence"
+ "m X" #'my/org-toggle-checkbox-presence)
+
+
+(use-package! denote
+  :after org
+  :config
+  (setq denote-directory my/notes-dir)
+  (setq denote-known-keywords '("project" "adventure"))
+  (setq +org-capture-notes-file my/notes-dir)
+
+  ;; set notes file to denote todo file, match on regex
+  ;; defaults to "todo.org" if it doesnt exist
+  (setq +org-capture-todo-file
+        (let ((denote-todo (cl-find
+                            (rx (* ascii) "--todo__" (* ascii) ".org")
+                            (directory-files my/notes-dir)
+                            :test
+                            #'string-match)))
+          (if denote-todo
+              denote-todo
+            "todo.org")))
+  :custom
+  (setq denote-infer-keywords t)
+  (setq denote-sort-keywords t)
+  (setq denote-file-type nil) ; Org is the default, set others here
+
+  (setq denote-allow-multi-word-keywords t)
+
+  ;; (setq denote-templates)
+  )
+
+(use-package! denote-journal
+  :after denote
+  :hook (calendar-mode . denote-journal-calendar-mode)
+  :config
+  (setq denote-journal-directory
+        (expand-file-name "journal" denote-directory))
+  (setq denote-journal-keyword "journal")
+
+  ;; null means it prompts me
+  (setq denote-journal-title-format nil)
+  )
+
+(use-package! denote-menu
+  :after denote
+  :after transient
+  :config
+  (setq denote-menu-title-column-width 50)
+
+  (transient-define-prefix my/denote-menu-transient ()
+    "Transient menu for Denote menu filtering and export commands."
+    ["Denote Menu Actions"
+     ("c" "Clear all filters" denote-menu-clear-filters)
+     ("f" "Filter by regex" denote-menu-filter)
+     ("k" "Filter by keyword" denote-menu-filter-by-keyword)
+     ("o" "Filter out keyword" denote-menu-filter-out-keyword)
+     ("e" "Export to Dired" denote-menu-export-to-dired)])
+
+  (map! :map denote-menu-mode-map
+        :leader
+        :desc "Denote menu actions"
+        "m H" #'my/denote-menu-transient)
+
+  (add-hook! 'denote-menu-mode-hook
+    (message "Press SPC m d for action menu"))
+
+  (map! :leader
+        :prefix "n"
+        :desc "View denote notes"
+        "v" #'denote-menu-list-notes)
+  )
+
+(use-package! consult-notes
+  :config
+  (consult-notes-denote-mode) ;; if it doesnt exist
+
+  (map! :leader
+        :prefix "n"
+        :desc "Switch to notes"
+        "," #'consult-notes)
+  )
+
+(with-eval-after-load 'org-capture
+  (setq org-capture-templates
+        '(("t" "Personal todo" entry
+           (file+headline +org-capture-todo-file "Inbox")
+           "* [ ] %?\n%i\n" :prepend t)
+          ("n" "New note" plain
+           (file denote-last-path)
+           (function
+            (lambda ()
+              (let ((denote-org-capture-specifiers "%i\n%?\n")) ;; typical org-capture template goes here
+                (denote-org-capture))))
+           :prepend t
+           :immediate-finish nil
+           :kill-buffer t
+           :jump-to-captured t)
+          ("j" "Journal" entry
+           (file denote-journal-path-to-new-or-existing-entry)
+           "* %U %?\n%i\n"
+           :kill-buffer t
+           :empty-lines 1)
+          ("p" "Templates for projects")
+          ("pt" "Project-local todo" entry
+           (file+headline +org-capture-project-todo-file "Inbox") "* TODO %?\n%i\n%a"
+           :prepend t)
+          ("pn" "Project-local notes" entry
+           (file+headline +org-capture-project-notes-file "Inbox") "* %U %?\n%i\n%a"
+           :prepend t)
+          ("pc" "Project-local changelog" entry
+           (file+headline +org-capture-project-changelog-file "Unreleased")
+           "* %U %?\n%i\n%a" :prepend t)
+          ("o" "Centralized templates for projects")
+          ("ot" "Project todo" entry #'+org-capture-central-project-todo-file
+           "* TODO %?\n %i\n %a" :heading "Tasks" :prepend nil)
+          ("on" "Project notes" entry #'+org-capture-central-project-notes-file
+           "* %U %?\n %i\n %a" :heading "Notes" :prepend t)
+          ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file
+           "* %U %?\n %i\n %a" :heading "Changelog" :prepend t))))
+
+(with-eval-after-load 'org-capture
+  (add-to-list 'org-capture-templates
+               '("m" "bruh New note (with denote.el)" plain
+                 (file denote-last-path)
+                 #'denote-org-capture
+                 :immediate-finish nil
+                 :kill-buffer t
+                 :jump-to-captured t
+                 )
+               ))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
-(setq display-line-numbers 'relative)
+;; `relative' doesn't count visually folded lines. To take folding into account
+;; use `visual'
+;; also a bit buggy
+(setq display-line-numbers-type 'visual)
+(setq display-line-numbers 'visual)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -103,9 +298,9 @@
 ;;(centaur-tabs-group-by-projectile-project)
 
 (evil-define-key 'normal centaur-tabs-mode-map (kbd "g <right>") 'centaur-tabs-forward        ; default Doom binding is 'g t'
-                                               (kbd "g <left>")  'centaur-tabs-backward       ; default Doom binding is 'g T'
-                                               (kbd "g <down>")  'centaur-tabs-forward-group
-                                               (kbd "g <up>")    'centaur-tabs-backward-group)
+  (kbd "g <left>")  'centaur-tabs-backward       ; default Doom binding is 'g T'
+  (kbd "g <down>")  'centaur-tabs-forward-group
+  (kbd "g <up>")    'centaur-tabs-backward-group)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INDENT TABS STUFF
@@ -197,7 +392,7 @@
 ;; auto format stuff
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(add-to-list '+format-on-save-enabled-modes 'gleam-mode t)
+                                        ; (add-to-list '+format-on-save-enabled-modes 'gleam-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; zig
@@ -205,8 +400,227 @@
 (setq lsp-zig-zls-executable "zls")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; copilot
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; accept completion from copilot and fallback to company
+;; (use-package! copilot
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (:map copilot-completion-map
+;;               ("C-<tab>" . 'copilot-accept-completion)
+;;               ("C-TAB" . 'copilot-accept-completion)
+;;               ("TAB-ESC" . 'copilot-accept-completion-by-word)
+;;               ("<tab>-<esc>" . 'copilot-accept-completion-by-word)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; gleam
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package! gleam-ts-mode
+  :mode (rx ".gleam" eos))
+
+(after! treesit
+  (add-to-list 'auto-mode-alist '("\\.gleam$" . gleam-ts-mode)))
+
+(after! gleam-ts-mode
+  (unless (treesit-language-available-p 'gleam)
+    (gleam-ts-install-grammar)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; lisp stuff
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; I really dont like how evil-cleverparens conflicts with `<' and `>'
+;; for indenting, especially in visual mode
+;; my versions allow slurping and barfing when on opening/closing sexp
+;; but with region select or not on opening/closing, indent normally
+
+(evil-define-command my/evil-cp-< (count)
+  "Context-sensitive version of `evil-shift-left` and
+Slurping/barfing operation that acts differently based on the
+points location in the form.
+
+- On opening paren: slurp backward.
+- On closing paren: barf forward.
+- If region is active, or point is not on delimiter: indent left.
+
+Details:
+Slurping/barfing operation that acts differently based on the
+point's location in the form.
+When point is on the opening delimiter of the form boundary, it
+will slurp the next element backwards while maintaining the
+location of the point in the original delimiter.
+
+  foo [(]bar baz) -> [(]foo bar baz)
+
+When point is on the closing delimiter, it will barf the
+rightmost element of the form forward, again maintaining the
+location of the point in the original delimiter. Only works if
+the form has more than one element.
+
+  (bar baz foo[)] -> (bar baz[)] foo
+
+When point is in the middle of a form, it will act as like a
+evil-shift-left-line.
+Also works on regions. "
+  (interactive "<c>")
+  (setq count (or count 1))
+  (cond
+   ;; Respect region selection
+   ((evil-visual-state-p)
+    (evil-shift-left (region-beginning) (region-end)))
+   ;; Slurp from opening delimiter
+   ((evil-cp--looking-at-any-opening-p)
+    (dotimes (_ count)
+      (evil-cp--slurp-backward-from-opening)))
+   ;; Barf from closing delimiter
+   ((evil-cp--looking-at-any-closing-p)
+    (dotimes (_ count)
+      (unless (or (sp-point-in-empty-sexp)
+                  (evil-cp--singleton-list-p))
+        (let (sp-barf-move-point-with-delimiter)
+          (sp-forward-barf-sexp))
+        (sp-backward-sexp)
+        (evil-cp-previous-closing))))
+   ;; Fallback to indent if not on delimiter
+   (t
+    (evil-shift-left-line count))))
+
+(evil-define-command my/evil-cp-> (count)
+  "Context-sensitive version of `evil-shift-right` and
+Slurping/barfing operation that acts differently based on the
+points location in the form.
+
+- On opening paren: barf backward.
+- On closing paren: slurp forward.
+- If region is active, or point is not on delimiter: indent right.
+
+Details:
+When cursor is on the opening delimiter of the form boundary, it
+will barf the first element of the form while maintaining the
+location of the cursor on the original delimiter.
+
+  [(]foo bar baz) -> foo [(]bar baz)
+
+When the cursor is on a closing delimiter, it will slurp the
+first sexp after the last closing delimiter from point moving it
+inside the form of which the cursor is currently on top of while
+maintaining the location of the cursor on the current closing
+delimiter.
+
+  (((bar baz[)])) foo -> (((bar baz foo[)]))
+
+When point is in the middle of a form, it will act as like a
+evil-shift-right-line.
+Also works on regions.
+"
+  (interactive "<c>")
+  (setq count (or count 1))
+  (cond
+   ;; Respect region selection
+   ((evil-visual-state-p)
+    (evil-shift-right (region-beginning) (region-end)))
+   ;; Barf backward from opening delimiter
+   ((evil-cp--looking-at-any-opening-p)
+    (dotimes (_ count)
+      (unless (or (sp-point-in-empty-sexp)
+                  (evil-cp--singleton-list-p))
+        (let (sp-barf-move-point-with-delimiter)
+          (sp-backward-barf-sexp))
+        (sp-forward-sexp)
+        (evil-cp-next-opening))))
+   ;; Slurp forward from closing delimiter
+   ((evil-cp--looking-at-any-closing-p)
+    (dotimes (_ count)
+      (evil-cp--slurp-forward-from-closing)))
+   ;; Fallback to indent if not on delimiter
+   (t
+    (evil-shift-right-line count))))
+
+(use-package evil-cleverparens
+  :after evil
+  :after map
+  ;; :defer t
+  ;; TODO: still doesnt set properly, idk why
+  :hook ((emacs-lisp-mode clojure-mode) . smartparens-strict-mode)
+  :config
+  ;; got `map-put!' not found error
+  ;; I added `:after map' to fix it (i think?)
+  (map-put! evil-cp-regular-bindings "<" #'my/evil-cp-<)
+  (map-put! evil-cp-regular-bindings ">" #'my/evil-cp->)
+  (map!
+   :mode evil-cleverparens-mode
+   :n "<" #'my/evil-cp-<
+   :v "<" #'my/evil-cp-<
+   :n ">" #'my/evil-cp->
+   :v ">" #'my/evil-cp->))
+
+(use-package! smartparens
+  :hook (((emacs-lisp-mode lisp-mode clojure-mode) . smartparens-strict-mode)
+         ((emacs-lisp-mode lisp-mode clojure-mode) . evil-smartparens-mode)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; clojure
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-hook 'clojure-mode #'evil-cleverparens-mode)
+(add-hook 'emacs-lisp-mode #'evil-cleverparens-mode)
+;; (add-hook! 'evil-cleverparens-mode '(emacs-lisp-mode clojure-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; macos PATH garbage
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; PATH doesnt get set correctly with this, thanks macos
+;; https://stackoverflow.com/questions/9435019/how-do-i-source-my-zshrc-within-emacs
+
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; custom whatever
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun my/yank-current-file-name ()
+  "Yank the file name of the current buffer."
+  (interactive)
+  (if buffer-file-name
+      (let ((file-name (file-name-nondirectory buffer-file-name)))
+        (kill-new file-name)
+        (message "Yanked file name: %s" file-name))
+    (message "Buffer is not visiting a file")))
+
+(defun my/yank-current-file-name-no-extension ()
+  "Yank the file name of the current buffer without the extension."
+  (interactive)
+  (if buffer-file-name
+      (let ((file-name (file-name-sans-extension (file-name-nondirectory buffer-file-name))))
+        (kill-new file-name)
+        (message "Yanked file name without extension: %s" file-name))
+    (message "Buffer is not visiting a file")))
+
+(map! :leader
+      :prefix "f"
+      :desc "Yank file name"
+      "n" #'my/yank-current-file-name
+      :desc "Yank file name without extension"
+      "N" #'my/yank-current-file-name-no-extension)
+
+
+(defun my/switch-or-create-vterm ()
+  "Switch to an existing vterm buffer in current workspace, or create a new one. Will use popup buffer if exists"
+  (interactive)
+  (let ((existing-vterm
+         (cl-find-if (lambda (buf)
+                       (and (string-match-p "\\(vterm-popup\\|^\\*vterm\\)" (buffer-name buf))
+                            (persp-contain-buffer-p buf)))
+                     (buffer-list))))
+    (if existing-vterm
+        (switch-to-buffer existing-vterm)
+      (+vterm/here nil))))
+
+(map! :leader
+      :prefix "o"
+      :desc "Open/Switch vterm here"
+      "T" #'my/switch-or-create-vterm)
 
 ;;; i lazy
 (evil-ex-define-cmd "W" #'evil-write)
@@ -214,8 +628,9 @@
 (evil-ex-define-cmd "wQ" #'evil-save-and-close)
 (evil-ex-define-cmd "WQ" #'evil-save-and-close)
 
-(map!
- :nv "SPC w O"
- #'+popup/raise)
+(map! :leader
+      :prefix ("w" . "window")
+      :desc "Raise popup"
+      "O" #'+popup/raise)
 
 ;;; config.el ends here
